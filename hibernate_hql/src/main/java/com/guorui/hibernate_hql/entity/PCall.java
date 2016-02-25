@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
  */
 //tag::hql-examples-domain-model-example[]
 @Entity
-public class Call {
+public class PCall {
 
     @Id
     @GeneratedValue
@@ -33,7 +33,7 @@ public class Call {
     //Getters and setters are omitted for brevity
 
 //end::hql-examples-domain-model-example[]
-    public Call() {}
+    public PCall() {}
 
     public Long getId() {
         return id;

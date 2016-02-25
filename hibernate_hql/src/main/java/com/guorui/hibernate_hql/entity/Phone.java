@@ -17,7 +17,9 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
 import javax.persistence.MapKeyTemporal;
@@ -32,9 +34,11 @@ import javax.persistence.TemporalType;
 public class Phone {
 
     @Id
+    @GeneratedValue
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="person_id")
     private Person person;
 
     private String number;
@@ -43,13 +47,13 @@ public class Phone {
     private PhoneType type;
 
     @OneToMany(mappedBy = "phone", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Call> calls = new ArrayList<Call>(  );
+    private List<PCall> calls = new ArrayList<PCall>(  );
 
     //tag::hql-collection-qualification-example[]
     @OneToMany(mappedBy = "phone")
     @MapKey(name = "timestamp")
     @MapKeyTemporal(TemporalType.TIMESTAMP )
-    private Map<Date, Call> callHistory = new HashMap<Date, Call>();
+    private Map<Date, PCall> callHistory = new HashMap<Date, PCall>();
     //end::hql-collection-qualification-example[]
 
     @ElementCollection
@@ -92,11 +96,11 @@ public class Phone {
         this.type = type;
     }
 
-    public List<Call> getCalls() {
+    public List<PCall> getCalls() {
         return calls;
     }
 
-    public Map<Date, Call> getCallHistory() {
+    public Map<Date, PCall> getCallHistory() {
         return callHistory;
     }
 
@@ -104,11 +108,17 @@ public class Phone {
         return repairTimestamps;
     }
 
-    public void addCall(Call call) {
+    public void addCall(PCall call) {
         calls.add( call );
         callHistory.put( call.getTimestamp(), call );
         call.setPhone( this );
     }
+
+	@Override
+	public String toString() {
+		return "Phone [id=" + id + ", person=" + person.getName() + ", number=" + number + ", type=" + type + "]";
+	}
+    
 //tag::hql-examples-domain-model-example[]
 }
 //end::hql-examples-domain-model-example[]

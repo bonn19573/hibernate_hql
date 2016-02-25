@@ -10,6 +10,12 @@
 
 <hibernate-configuration>
 	<session-factory >
-		<mapping package="com.guorui.hibernate_hql.entity"/>
+		<mapping class="com.guorui.hibernate_hql.entity.Person"/>
+		<mapping class="com.guorui.hibernate_hql.entity.PCall"/>
+		<mapping class="com.guorui.hibernate_hql.entity.CreditCardPayment"/>
+		<mapping class="com.guorui.hibernate_hql.entity.Partner"/>
+		<mapping class="com.guorui.hibernate_hql.entity.Payment"/>
+		<mapping class="com.guorui.hibernate_hql.entity.Phone"/>
+		<mapping class="com.guorui.hibernate_hql.entity.WireTransferPayment"/>
 	</session-factory>
 </hibernate-configuration>
