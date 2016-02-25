@@ -6,10 +6,13 @@
  */
 package com.guorui.hibernate_hql.entity;
 
-import java.util.Date;
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 
 /**
@@ -17,23 +20,23 @@ import javax.persistence.ManyToOne;
  */
 //tag::hql-examples-domain-model-example[]
 @Entity
-public class Call {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Payment {
 
     @Id
     @GeneratedValue
     private Long id;
 
+    private BigDecimal amount;
+
+    private boolean completed;
+
     @ManyToOne
-    private Phone phone;
-
-    private Date timestamp;
-
-    private int duration;
+    private Person person;
 
     //Getters and setters are omitted for brevity
 
 //end::hql-examples-domain-model-example[]
-    public Call() {}
 
     public Long getId() {
         return id;
@@ -43,28 +46,28 @@ public class Call {
         this.id = id;
     }
 
-    public Phone getPhone() {
-        return phone;
+    public BigDecimal getAmount() {
+        return amount;
     }
 
-    public void setPhone(Phone phone) {
-        this.phone = phone;
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
+    public boolean isCompleted() {
+        return completed;
     }
 
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
-    public int getDuration() {
-        return duration;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 //tag::hql-examples-domain-model-example[]
 }

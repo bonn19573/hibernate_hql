@@ -6,12 +6,13 @@
  */
 package com.guorui.hibernate_hql.entity;
 
+import javax.persistence.Entity;
+
 /**
  * @author Vlad Mihalcea
  */
 //tag::hql-examples-domain-model-example[]
-public enum PhoneType {
-    LAND_LINE,
-    MOBILE;
+@Entity
+public class WireTransferPayment extends Payment {
 }
 //end::hql-examples-domain-model-example[]
