@@ -10,6 +10,6 @@
 
 <hibernate-configuration>
 	<session-factory >
-
+		<mapping package="com.guorui.hibernate_hql.entity"/>
 	</session-factory>
 </hibernate-configuration>
