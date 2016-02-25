@@ -13,10 +13,16 @@
         <description>
             Persistence unit for the JPA tutorial of the Hibernate Getting Started Guide
         </description>
+
+        <class>com.guorui.hibernate_hql.entity.Call</class>
+        <class>com.guorui.hibernate_hql.entity.CreditCardPayment</class>
+        <class>com.guorui.hibernate_hql.entity.Partner</class>
+        <class>com.guorui.hibernate_hql.entity.Payment</class>
+        <class>com.guorui.hibernate_hql.entity.Person</class>
+        <class>com.guorui.hibernate_hql.entity.Phone</class>
+        <class>com.guorui.hibernate_hql.entity.WireTransferPayment</class>
         
-        <class>com.guorui.HibernateFetchTest.entity.Department</class>
-        <class>com.guorui.HibernateFetchTest.entity.Employee</class>
-        <class>com.guorui.HibernateFetchTest.entity.Project</class>
+        
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
