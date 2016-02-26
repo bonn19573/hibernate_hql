@@ -42,7 +42,15 @@ public class Payment {
         return id;
     }
 
-    public void setId(Long id) {
+    public Payment() {
+	}
+
+	public Payment(BigDecimal amount, boolean completed) {
+		this.amount = amount;
+		this.completed = completed;
+	}
+
+	public void setId(Long id) {
         this.id = id;
     }
 
@@ -69,6 +77,12 @@ public class Payment {
     public void setPerson(Person person) {
         this.person = person;
     }
+
+	@Override
+	public String toString() {
+		return "Payment [id=" + id + ", amount=" + amount + ", completed=" + completed + ", person=" + person.getName() + "]";
+	}
+    
 //tag::hql-examples-domain-model-example[]
 }
 //end::hql-examples-domain-model-example[]

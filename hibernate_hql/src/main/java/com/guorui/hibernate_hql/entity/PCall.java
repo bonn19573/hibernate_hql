@@ -35,7 +35,12 @@ public class PCall {
 //end::hql-examples-domain-model-example[]
     public PCall() {}
 
-    public Long getId() {
+    public PCall(Date timestamp, int duration) {
+		this.timestamp = timestamp;
+		this.duration = duration;
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -66,6 +71,12 @@ public class PCall {
     public void setDuration(int duration) {
         this.duration = duration;
     }
+
+	@Override
+	public String toString() {
+		return "PCall [id=" + id + ", phone=" + phone.getNumber() + ", timestamp=" + timestamp + ", duration=" + duration + "]";
+	}
+    
 //tag::hql-examples-domain-model-example[]
 }
 //end::hql-examples-domain-model-example[]

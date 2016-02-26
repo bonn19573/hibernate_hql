@@ -1,9 +1,9 @@
 package com.guorui.hibernate_hql;
 
-import java.security.Signature;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
@@ -11,7 +11,10 @@ import javax.persistence.TypedQuery;
 
 import org.junit.Test;
 
+import com.guorui.hibernate_hql.entity.PCall;
+import com.guorui.hibernate_hql.entity.Payment;
 import com.guorui.hibernate_hql.entity.Person;
+import com.guorui.hibernate_hql.entity.Phone;
 import com.guorui.hibernate_hql.entity.PhoneType;
 
 public class JPQLTest extends AbstractJPATest {
@@ -185,5 +188,80 @@ public class JPQLTest extends AbstractJPATest {
 		for (Person person : resultList) {
 			System.out.println(person);
 		}
+	}
+	
+	@Test
+	public void testPathExpression(){
+		TypedQuery<Phone> query = entityManager.createQuery(""
+				+ "select ph "
+				+ "from Phone ph "
+				+ "where ph.person.address = :address",
+				Phone.class).setParameter("address", "beijing");
+		List<Phone> resultList = query.getResultList();
+		for (Phone phone : resultList) {
+			System.out.println(phone);
+		}
+		
+		List<Phone> resultList2 = entityManager.createQuery(""
+				+ "select ph "
+				+ "from Phone ph "
+				+ "inner join ph.person pr "
+				+ "on pr.address=:address",Phone.class)
+		.setParameter("address", "beijing").getResultList();
+		
+		for (Phone phone : resultList2) {
+			System.out.println(phone);
+		}
+	}
+	
+	@Test
+	public void testCollectionValue(){
+		List<Phone> resultList = entityManager.createQuery(""
+				+ "select ph "
+				+ "from Person pr "
+				+ "join pr.phones ph "
+				+ "where pr.address=:address"
+				+ "",Phone.class).setParameter("address", "beijing").getResultList();
+		
+		System.out.println(resultList);
+		
+		List<PCall> resultList2 = entityManager.createQuery(""
+				+ "select value(ch) "
+				+ "from Phone ph "
+				+ "join ph.callHistory ch "
+				+ "where ph.id=:id"
+				+ "",PCall.class)
+		.setParameter("id", 13L).getResultList();
+		System.out.println(resultList2);
+		
+		List<Date> resultList3 = entityManager.createQuery(""
+				+ "select key(ch) "
+				+ "from Phone ph "
+				+ "join ph.callHistory ch "
+				+ "where ph.id=:id"
+				+ "",Date.class)
+		.setParameter("id", 13L).getResultList();
+		System.out.println(resultList3);
+		
+
+	}
+	
+	@Test
+	public void testMapEntry(){
+		List<Map.Entry<Date, PCall>> callHistory = entityManager.createQuery(
+			    "select entry(ch) " +
+			    "from Phone ph " +
+			    "join ph.callHistory ch " +
+			    "where ph.id = :id " )
+			.setParameter( "id", 13L )
+			.getResultList();
+		System.out.println(callHistory);
+	}
+	
+	@Test
+	public void testPoly(){
+		List<Payment> resultList = entityManager.createQuery("select p from Payment p",Payment.class).getResultList();
+		
+		System.out.println(resultList);
 	}
 }

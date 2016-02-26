@@ -1,10 +1,13 @@
 package com.guorui.hibernate_hql;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Test;
 
+import com.guorui.hibernate_hql.entity.PCall;
+import com.guorui.hibernate_hql.entity.Payment;
 import com.guorui.hibernate_hql.entity.Person;
 import com.guorui.hibernate_hql.entity.Phone;
 import com.guorui.hibernate_hql.entity.PhoneType;
@@ -70,5 +73,36 @@ public class PrepareData extends AbstractTest{
 		
 		
 	}
+	
+	@Test
+	public void prepareCallHistory(){
+		Phone phone = session.get(Phone.class, 13L);
+		PCall pCall = new PCall(new Date(), 5);
+		PCall pCall2 = new PCall(new Date(), 10);
+		phone.addCall(pCall);
+		phone.addCall(pCall2);
+		session.save(phone);
+		
+		Phone phone2 = session.get(Phone.class, 14L);
+		PCall pCall3 = new PCall(new Date(), 15);
+		PCall pCall4 = new PCall(new Date(), 20);
+		phone2.addCall(pCall3);
+		phone2.addCall(pCall4);
+		session.save(phone2);
+		
+	}
 
+	
+	@Test
+	public void preparePayment(){
+		Person person = session.get(Person.class, 1L);
+		Payment payment = new Payment(new BigDecimal(100), true);
+		Payment payment2 = new Payment(new BigDecimal(200), false);
+		payment.setPerson(person);
+		payment2.setPerson(person);
+		
+		session.save(payment);
+		session.save(payment2);
+		
+	}
 }
